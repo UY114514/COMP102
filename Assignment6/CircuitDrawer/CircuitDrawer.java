@@ -24,6 +24,8 @@ public class CircuitDrawer {
     private double x, y;
     private String operation;
     private boolean horizontalMode = true;
+    private boolean wireFirstTime = true;
+    private double x1, x2, y1, y2;
 
     //Constructor
 
@@ -34,6 +36,7 @@ public class CircuitDrawer {
         UI.setMouseListener(this::doMouse);
         UI.addButton("Clear", UI::clearGraphics);
         /*# YOUR CODE HERE */
+        UI.addButton("Wire", this::doSetWire);
 
         UI.addButton("Quit", UI::quit);
 
@@ -123,10 +126,8 @@ public class CircuitDrawer {
             this.drawResistor(x, y);
         } else if (this.operation.equals("Wire")) {
             this.drawWire(x, y);
-
         } else if (this.operation.equals("Capacitor")) {
             this.drawCapacitor(x, y);
-
         } else if (this.operation.equals("Source")) {
             this.drawSource(x, y);
         } else if (this.operation.equals("Eraser")) {
@@ -172,6 +173,21 @@ public class CircuitDrawer {
         /*# YOUR CODE HERE */
         //TODO:Draw Wire
 
+        if (this.wireFirstTime) {
+            x1 = x;
+            y1 = y;
+            this.wireFirstTime = false;
+            UI.println("first");
+        } else {
+            x2 = x;
+            y2 = y;
+            UI.drawLine(x1, y1, x2, y2);
+            this.wireFirstTime = true;//reset to default value
+        }
+
+
+
+
     }
 
 
@@ -194,6 +210,7 @@ public class CircuitDrawer {
 
         }
 
+
     }
 
     /**
@@ -212,6 +229,7 @@ public class CircuitDrawer {
 
         }
 
+
     }
 
 
@@ -222,6 +240,8 @@ public class CircuitDrawer {
     public void doErase(double x, double y) {
         /*# YOUR CODE HERE */
         //TODO:Eraser
+
+
     }
 
 
@@ -239,6 +259,7 @@ public class CircuitDrawer {
         } else {
 
         }
+
 
     }
 
