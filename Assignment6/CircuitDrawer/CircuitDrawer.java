@@ -26,6 +26,7 @@ public class CircuitDrawer {
     private boolean horizontalMode = true;
     private boolean wireFirstTime = true;
     private double x1, x2, y1, y2;
+    private int n = 0;
 
     //Constructor
 
@@ -172,21 +173,16 @@ public class CircuitDrawer {
     public void drawWire(double x, double y) {
         /*# YOUR CODE HERE */
         //TODO:Draw Wire
-
         if (this.wireFirstTime) {
             x1 = x;
             y1 = y;
             this.wireFirstTime = false;
-            UI.println("first");
         } else {
             x2 = x;
             y2 = y;
             UI.drawLine(x1, y1, x2, y2);
             this.wireFirstTime = true;//reset to default value
         }
-
-
-
 
     }
 
