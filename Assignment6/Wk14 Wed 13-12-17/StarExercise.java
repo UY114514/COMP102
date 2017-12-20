@@ -7,7 +7,6 @@
 import ecs100.*;
 import java.awt.Color;
 import javax.swing.JColorChooser;
-import
 /** Lets the user draw "stars" - lots of lines from a center - using the mouse.
  * The program has two "modes":
  *   setting the center of the star,
