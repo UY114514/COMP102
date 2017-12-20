@@ -22,7 +22,7 @@ public class CircuitDrawer {
     //  - the position the mouse was pressed,
     /*# YOUR CODE HERE */
     private double x, y;
-    private String operation;
+    private String operation, labelText;
     private boolean horizontalMode = true;
     private boolean wireFirstTime = true;
     private double x1, x2, y1, y2;
@@ -38,6 +38,7 @@ public class CircuitDrawer {
         UI.addButton("Clear", UI::clearGraphics);
         /*# YOUR CODE HERE */
         UI.addButton("Wire", this::doSetWire);
+        UI.addTextField("Label", this::doSetLabel);
 
         UI.addButton("Quit", UI::quit);
 
@@ -46,6 +47,14 @@ public class CircuitDrawer {
 
     // Methods to change the tool that controls will be drawn next
     // These methods just save information to the fields.
+
+
+    public void doStoreLabelText(String s) {
+        this.labelText = s;
+
+    }
+
+
     /* Respond to the resistor button */
     public void doSetResistor() {
         /*# YOUR CODE HERE */
@@ -86,9 +95,19 @@ public class CircuitDrawer {
     /**
      * Respond to the text field (completion only)
      */
-    public void doSetLabel(String v) {
+/*    public Color randomColor() {
+        int r = (int) (Math.random() * 255);
+        int g = (int) (Math.random() * 255);
+        int b = (int) (Math.random() * 255);
+        Color color = new Color(r, g, b);
+        return color;
+    }*/
+    public void doSetLabel(String s) {
         /*# YOUR CODE HERE */
+//        UI.setFontSize(28);
+
         this.operation = "Label";
+        this.labelText = s;
     }
 
     /**
@@ -122,6 +141,7 @@ public class CircuitDrawer {
         if (action.equals("released")) {
             this.x = x;
             this.y = y;
+//            UI.setColor(this.randomColor());
         }
         if (this.operation.equals("Resistor")) {
             this.drawResistor(x, y);
@@ -221,6 +241,7 @@ public class CircuitDrawer {
 
         if (horizontalMode) {
 
+
         } else {
 
         }
@@ -250,11 +271,7 @@ public class CircuitDrawer {
         /*# YOUR CODE HERE */
         //TODO:Draw Label
 
-        if (horizontalMode) {
-
-        } else {
-
-        }
+        UI.drawString(labelText, x, y);
 
 
     }
