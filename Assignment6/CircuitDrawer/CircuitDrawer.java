@@ -28,6 +28,7 @@ public class CircuitDrawer {
     private double x1, x2, y1, y2;
     private int n = 0;
 
+
     //Constructor
 
     /**
@@ -38,7 +39,11 @@ public class CircuitDrawer {
         UI.addButton("Clear", UI::clearGraphics);
         /*# YOUR CODE HERE */
         UI.addButton("Wire", this::doSetWire);
+        UI.addButton("Resistor", this::doSetResistor);
         UI.addTextField("Label", this::doSetLabel);
+        UI.addButton("Eraser", this::doSetEraser);
+        UI.addButton("Horiz/Vert", this::doSwitchDirection);
+
 
         UI.addButton("Quit", UI::quit);
 
@@ -119,11 +124,12 @@ public class CircuitDrawer {
      */
     public void doSwitchDirection() {
         /*# YOUR CODE HERE */
-        if (this.horizontalMode = true) {
+        if (this.horizontalMode) {
             this.horizontalMode = false;
         } else {
             this.horizontalMode = true;
         }
+
 
     }
 
@@ -177,8 +183,14 @@ public class CircuitDrawer {
 
         //TODO:Draw Resistor
         if (horizontalMode) {//TODO:Horiz/Vert mode
+            UI.drawRect(x - length / 2, y - width / 2, length, width);
+            UI.drawLine(x - length / 2, y, x - length / 2 - stub, y);
+            UI.drawLine(x + length / 2, y, x + length / 2 + stub, y);
 
         } else {
+            UI.drawRect(x - width / 2, y - width / 2, width, length);
+            UI.drawLine(x, y + (length / 2) + stub, x, y + (length / 2) + stub * 2);
+            UI.drawLine(x, y - length / 4, x, y - length / 4 - stub);//uppper line
 
         }
 
@@ -257,6 +269,7 @@ public class CircuitDrawer {
     public void doErase(double x, double y) {
         /*# YOUR CODE HERE */
         //TODO:Eraser
+        UI.eraseRect(x - 25, y - 25, 50, 50);
 
 
     }
