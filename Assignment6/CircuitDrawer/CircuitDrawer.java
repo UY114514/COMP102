@@ -42,6 +42,7 @@ public class CircuitDrawer {
         UI.addButton("Wire", this::doSetWire);
         UI.addButton("Resistor", this::doSetResistor);
         UI.addButton("Capacitor", this::doSetCapacitor);
+        UI.addButton("Source", this::doSetSource);
         UI.addTextField("Label", this::doSetLabel);
         UI.addButton("Eraser", this::doSetEraser);
         UI.addButton("Horiz/Vert", this::doSwitchDirection);
@@ -208,13 +209,14 @@ public class CircuitDrawer {
      */
     public void drawCapacitor(double x, double y) {
         /*# YOUR CODE HERE */
-        //TODO:Draw Vertical Capacitor
         if (horizontalMode) {
+            UI.eraseRect(x - 5, y - 10, 5, 10);
             UI.drawLine(x - 30, y, x - 5, y);//left wire
             UI.drawLine(x + 30, y, x + 5, y);//right wire
             UI.drawLine(x - 5, y - 10, x - 5, y + 10);//left vert line
             UI.drawLine(x + 5, y - 10, x + 5, y + 10);//right vert line
         } else {
+//TODO:Erase before drawing lines
             UI.drawLine(x, y - 30, x, y - 5);//upper wire
             UI.drawLine(x, y + 30, x, y + 5);//lower wire
             UI.drawLine(x - 10, y - 5, x + 10, y - 5);//lower horiz line
@@ -231,8 +233,14 @@ public class CircuitDrawer {
     public void drawSource(double x, double y) {
         /*# YOUR CODE HERE */
         //TODO:Draw Source
+        double size = 20;//for test
+        double wireLength = 10;
 
         if (horizontalMode) {
+            UI.eraseOval(x - size / 2, y - size / 2, size, size);
+            UI.drawOval(x - size / 2, y - size / 2, size, size);
+            UI.drawLine(x - size / 2, y, x - size / 2 - wireLength, y);
+            UI.drawLine(x + size / 2, y, x + size / 2 + wireLength, y);
 
 
         } else {
