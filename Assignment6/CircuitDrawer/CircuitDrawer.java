@@ -27,6 +27,7 @@ public class CircuitDrawer {
     private boolean wireFirstTime = true;
     private double x1, x2, y1, y2;
     private int n = 0;
+    private double eraserSize = 40;
 
 
     //Constructor
@@ -53,48 +54,34 @@ public class CircuitDrawer {
     // Methods to change the tool that controls will be drawn next
     // These methods just save information to the fields.
 
-
-    public void doStoreLabelText(String s) {
-        this.labelText = s;
-
-    }
-
-
     /* Respond to the resistor button */
     public void doSetResistor() {
         /*# YOUR CODE HERE */
         this.operation = "Resistor";
-
-
     }
 
     /* Respond to the wire button */
     public void doSetWire() {
         /*# YOUR CODE HERE */
         this.operation = "Wire";
-
     }
 
     /* Respond to the capacitor button */
     public void doSetCapacitor() {
         /*# YOUR CODE HERE */
         this.operation = "Capacitor";
-
-
     }
 
     /* Respond to the source button */
     public void doSetSource() {
         /*# YOUR CODE HERE */
         this.operation = "Source";
-
     }
 
     /* Respond to the eraser button */
     public void doSetEraser() {
         /*# YOUR CODE HERE */
         this.operation = "Eraser";
-
     }
 
     /**
@@ -109,8 +96,6 @@ public class CircuitDrawer {
     }*/
     public void doSetLabel(String s) {
         /*# YOUR CODE HERE */
-//        UI.setFontSize(28);
-
         this.operation = "Label";
         this.labelText = s;
     }
@@ -129,8 +114,6 @@ public class CircuitDrawer {
         } else {
             this.horizontalMode = true;
         }
-
-
     }
 
 
@@ -147,7 +130,6 @@ public class CircuitDrawer {
         if (action.equals("released")) {
             this.x = x;
             this.y = y;
-//            UI.setColor(this.randomColor());
         }
         if (this.operation.equals("Resistor")) {
             this.drawResistor(x, y);
@@ -179,19 +161,14 @@ public class CircuitDrawer {
         double width = 11;     // size in the shorter dimension 
         double stub = 10;      // the length of the wires on each end
         /*# YOUR CODE HERE */
-
-
-        //TODO:Draw Resistor
         if (horizontalMode) {//TODO:Horiz/Vert mode
             UI.drawRect(x - length / 2, y - width / 2, length, width);
             UI.drawLine(x - length / 2, y, x - length / 2 - stub, y);
             UI.drawLine(x + length / 2, y, x + length / 2 + stub, y);
-
         } else {
             UI.drawRect(x - width / 2, y - width / 2, width, length);
             UI.drawLine(x, y + (length / 2) + stub, x, y + (length / 2) + stub * 2);
             UI.drawLine(x, y - length / 4, x, y - length / 4 - stub);//uppper line
-
         }
 
     }
@@ -204,7 +181,6 @@ public class CircuitDrawer {
      */
     public void drawWire(double x, double y) {
         /*# YOUR CODE HERE */
-        //TODO:Draw Wire
         if (this.wireFirstTime) {
             x1 = x;
             y1 = y;
@@ -268,10 +244,7 @@ public class CircuitDrawer {
      */
     public void doErase(double x, double y) {
         /*# YOUR CODE HERE */
-        //TODO:Eraser
-        UI.eraseRect(x - 25, y - 25, 50, 50);
-
-
+        UI.eraseRect(x - 25, y - 25, eraserSize, eraserSize);
     }
 
 
@@ -282,8 +255,6 @@ public class CircuitDrawer {
      */
     public void drawLabel(double x, double y) {
         /*# YOUR CODE HERE */
-        //TODO:Draw Label
-
         UI.drawString(labelText, x, y);
 
 
