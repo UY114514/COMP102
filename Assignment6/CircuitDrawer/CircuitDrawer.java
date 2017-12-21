@@ -41,6 +41,7 @@ public class CircuitDrawer {
         /*# YOUR CODE HERE */
         UI.addButton("Wire", this::doSetWire);
         UI.addButton("Resistor", this::doSetResistor);
+        UI.addButton("Capacitor", this::doSetCapacitor);
         UI.addTextField("Label", this::doSetLabel);
         UI.addButton("Eraser", this::doSetEraser);
         UI.addButton("Horiz/Vert", this::doSwitchDirection);
@@ -162,10 +163,12 @@ public class CircuitDrawer {
         double stub = 10;      // the length of the wires on each end
         /*# YOUR CODE HERE */
         if (horizontalMode) {//TODO:Horiz/Vert mode
+            UI.eraseRect(x - length / 2, y - width / 2, length, width);
             UI.drawRect(x - length / 2, y - width / 2, length, width);
             UI.drawLine(x - length / 2, y, x - length / 2 - stub, y);
             UI.drawLine(x + length / 2, y, x + length / 2 + stub, y);
         } else {
+            UI.eraseRect(x - width / 2, y - width / 2, width, length);
             UI.drawRect(x - width / 2, y - width / 2, width, length);
             UI.drawLine(x, y + (length / 2) + stub, x, y + (length / 2) + stub * 2);
             UI.drawLine(x, y - length / 4, x, y - length / 4 - stub);//uppper line
@@ -205,16 +208,18 @@ public class CircuitDrawer {
      */
     public void drawCapacitor(double x, double y) {
         /*# YOUR CODE HERE */
-        //TODO:Draw Capacitor
-
-
+        //TODO:Draw Vertical Capacitor
         if (horizontalMode) {
-
+            UI.drawLine(x - 30, y, x - 5, y);//left wire
+            UI.drawLine(x + 30, y, x + 5, y);//right wire
+            UI.drawLine(x - 5, y - 10, x - 5, y + 10);//left vert line
+            UI.drawLine(x + 5, y - 10, x + 5, y + 10);//right vert line
         } else {
-
+            UI.drawLine(x, y - 30, x, y - 5);//upper wire
+            UI.drawLine(x, y + 30, x, y + 5);//lower wire
+            UI.drawLine(x - 10, y - 5, x + 10, y - 5);//lower horiz line
+            UI.drawLine(x - 10, y + 5, x + 10, y + 5);//upper line
         }
-
-
     }
 
     /**
