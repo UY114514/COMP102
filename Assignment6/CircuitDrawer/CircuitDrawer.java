@@ -22,12 +22,14 @@ public class CircuitDrawer {
     //  - the position the mouse was pressed,
     /*# YOUR CODE HERE */
     private double x, y;
-    private String operation, labelText;
+    private String operation = " ";
+    private String labelText;
     private boolean horizontalMode = true;
     private boolean wireFirstTime = true;
     private double x1, x2, y1, y2;
     private int n = 0;
     private double eraserSize = 40;
+    private String buttonName = "Horiz";
 
 
     //Constructor
@@ -45,7 +47,7 @@ public class CircuitDrawer {
         UI.addButton("Source", this::doSetSource);
         UI.addTextField("Label", this::doSetLabel);
         UI.addButton("Eraser", this::doSetEraser);
-        UI.addButton("Horiz/Vert", this::doSwitchDirection);
+        UI.addButton("Horiz", this::doSwitchDirection);
         UI.addButton("Quit", UI::quit);
 
         UI.setDivider(0.0);  // Hide the text area.
@@ -127,25 +129,28 @@ public class CircuitDrawer {
      */
     public void doMouse(String action, double x, double y) {
         /*# YOUR CODE HERE */
+        if (this.operation.equals("Wire")) {
+            if (action.equals("pressed")) {
+                this.drawWire(x, y);
+            }
+        }
         if (action.equals("released")) {
             this.x = x;
             this.y = y;
+            if (this.operation.equals("Resistor")) {
+                this.drawResistor(x, y);
+            } else if (this.operation.equals("Wire")) {
+                this.drawWire(x, y);
+            } else if (this.operation.equals("Capacitor")) {
+                this.drawCapacitor(x, y);
+            } else if (this.operation.equals("Source")) {
+                this.drawSource(x, y);
+            } else if (this.operation.equals("Eraser")) {
+                this.doErase(x, y);
+            } else if (this.operation.equals("Label")) {
+                this.drawLabel(x, y);
+            }
         }
-        if (this.operation.equals("Resistor")) {
-            this.drawResistor(x, y);
-        } else if (this.operation.equals("Wire")) {
-            this.drawWire(x, y);
-        } else if (this.operation.equals("Capacitor")) {
-            this.drawCapacitor(x, y);
-        } else if (this.operation.equals("Source")) {
-            this.drawSource(x, y);
-        } else if (this.operation.equals("Eraser")) {
-            this.doErase(x, y);
-        } else if (this.operation.equals("Label")) {
-            this.drawLabel(x, y);
-
-        }
-
 
     }
 
@@ -242,7 +247,7 @@ public class CircuitDrawer {
             UI.eraseOval(x - size / 2, y - size / 2, size, size);
             UI.drawOval(x - size / 2, y - size / 2, size, size);
             UI.drawLine(x, y - size / 2 - wireLength, x, y - size / 2);
-            UI.drawLine(x, y + size / 2 - wireLength, x, y + size / 2);
+            UI.drawLine(x, y + size / 2 + wireLength, x, y + size / 2);
         }
 
 
