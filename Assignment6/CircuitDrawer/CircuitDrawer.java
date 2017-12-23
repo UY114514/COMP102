@@ -9,7 +9,8 @@
 
 import ecs100.*;
 
-import java.awt.Color;
+import javax.swing.*;
+import java.awt.*;
 
 public class CircuitDrawer {
 
@@ -47,7 +48,8 @@ public class CircuitDrawer {
         UI.addButton("Source", this::doSetSource);
         UI.addTextField("Label", this::doSetLabel);
         UI.addButton("Eraser", this::doSetEraser);
-        UI.addButton("Horiz", this::doSwitchDirection);
+//        UI.addButton(buttonName, this::doSwitchDirection);//WIP
+        UI.addButton("Horiz/Vert", this::doSwitchDirection);
         UI.addButton("Quit", UI::quit);
 
         UI.setDivider(0.0);  // Hide the text area.
@@ -113,9 +115,20 @@ public class CircuitDrawer {
         /*# YOUR CODE HERE */
         if (this.horizontalMode) {
             this.horizontalMode = false;
+            this.buttonName = "Vert";
         } else {
             this.horizontalMode = true;
+            this.buttonName = "Horiz";
         }
+        this.doChangeButtonName();//WIP
+    }
+
+    private void doChangeButtonName() {//TODO:Function to change Button's name
+//        JFrame frame = UI.getFrame();
+//        Container contentPanel = frame.getContentPane();
+//        contentPanel.repaint();
+
+
     }
 
 
@@ -131,7 +144,7 @@ public class CircuitDrawer {
         /*# YOUR CODE HERE */
         if (this.operation.equals("Wire")) {
             if (action.equals("pressed")) {
-                this.drawWire(x, y);
+                this.drawWireChallenge(x, y);
             }
         }
         if (action.equals("released")) {
@@ -140,7 +153,7 @@ public class CircuitDrawer {
             if (this.operation.equals("Resistor")) {
                 this.drawResistor(x, y);
             } else if (this.operation.equals("Wire")) {
-                this.drawWire(x, y);
+                this.drawWireChallenge(x, y);
             } else if (this.operation.equals("Capacitor")) {
                 this.drawCapacitor(x, y);
             } else if (this.operation.equals("Source")) {
@@ -196,6 +209,29 @@ public class CircuitDrawer {
             x2 = x;
             y2 = y;
             UI.drawLine(x1, y1, x2, y2);
+            this.wireFirstTime = true;//reset to default value
+        }
+
+    }
+
+
+    public void drawWireChallenge(double x, double y) {
+        if (this.wireFirstTime) {
+            x1 = x;
+            y1 = y;
+            this.wireFirstTime = false;
+        } else {
+            x2 = x;
+            y2 = y;
+            if (x1 != x2 && y1 != y2) {//check if 2 dot is on one line or not
+                UI.drawLine(x1, y1, x2, y1);
+                UI.drawLine(x2, y1, x2, y2);
+
+            } else {
+
+                UI.drawLine(x1, y1, x2, y2);
+            }
+
             this.wireFirstTime = true;//reset to default value
         }
 
