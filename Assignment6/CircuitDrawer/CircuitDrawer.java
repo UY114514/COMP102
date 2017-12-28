@@ -11,6 +11,8 @@ import ecs100.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 public class CircuitDrawer {
 
@@ -31,6 +33,7 @@ public class CircuitDrawer {
     private int n = 0;
     private double eraserSize = 40;
     private String buttonName = "Horiz";
+    private String lastOperation = " ";
 
 
     //Constructor
@@ -40,7 +43,7 @@ public class CircuitDrawer {
      */
     public CircuitDrawer() {
         UI.setMouseListener(this::doMouse);
-        UI.addButton("Clear", UI::clearGraphics);
+        UI.addButton("Clear", this::doClear);
         /*# YOUR CODE HERE */
         UI.addButton("Wire", this::doSetWire);
         UI.addButton("Resistor", this::doSetResistor);
@@ -48,9 +51,10 @@ public class CircuitDrawer {
         UI.addButton("Source", this::doSetSource);
         UI.addTextField("Label", this::doSetLabel);
         UI.addButton("Eraser", this::doSetEraser);
-//        UI.addButton(buttonName, this::doSwitchDirection);//WIP
-        UI.addButton("Horiz/Vert", this::doSwitchDirection);
+        UI.addButton(buttonName, this::doSwitchDirection);//WIP
+//        UI.addButton("Horiz/Vert", this::doSwitchDirection);
         UI.addButton("Quit", UI::quit);
+        this.showCurrentTool();
 
         UI.setDivider(0.0);  // Hide the text area.
     }
@@ -58,34 +62,48 @@ public class CircuitDrawer {
     // Methods to change the tool that controls will be drawn next
     // These methods just save information to the fields.
 
+
+    public void doClear() {
+        UI.clearGraphics();
+        this.operation = "Clear";
+        this.showCurrentTool();
+
+
+    }
+
     /* Respond to the resistor button */
     public void doSetResistor() {
         /*# YOUR CODE HERE */
         this.operation = "Resistor";
+        this.showCurrentTool();
     }
 
     /* Respond to the wire button */
     public void doSetWire() {
         /*# YOUR CODE HERE */
         this.operation = "Wire";
+        this.showCurrentTool();
     }
 
     /* Respond to the capacitor button */
     public void doSetCapacitor() {
         /*# YOUR CODE HERE */
         this.operation = "Capacitor";
+        this.showCurrentTool();
     }
 
     /* Respond to the source button */
     public void doSetSource() {
         /*# YOUR CODE HERE */
         this.operation = "Source";
+        this.showCurrentTool();
     }
 
     /* Respond to the eraser button */
     public void doSetEraser() {
         /*# YOUR CODE HERE */
         this.operation = "Eraser";
+        this.showCurrentTool();
     }
 
     /**
@@ -102,6 +120,7 @@ public class CircuitDrawer {
         /*# YOUR CODE HERE */
         this.operation = "Label";
         this.labelText = s;
+        this.showCurrentTool();
     }
 
     /**
@@ -123,10 +142,20 @@ public class CircuitDrawer {
         this.doChangeButtonName();//WIP
     }
 
-    private void doChangeButtonName() {//TODO:Function to change Button's name
-//        JFrame frame = UI.getFrame();
-//        Container contentPanel = frame.getContentPane();
-//        contentPanel.repaint();
+    public void doChangeButtonName() {//TODO:Function to change Button's name
+        JFrame frame = UI.getFrame();
+//        UI.println(frame.getAccessibleContext());
+//        JPanel inputPanel = (JPanel)frame.getRootPane().getComponent(0);
+//        inputPanel.updateUI();
+//        frame
+//        UI.println(inputPanel.getComponentCount());
+//        inputPanel.setBackground(Color.BLUE);
+//        UI ui = new UI();
+//        Method[] method = ui.getClass().getMethods();
+//        for (Method m: method) {UI.println(m);
+//
+//        }
+//        frame.getComponent()
 
 
     }
@@ -142,6 +171,7 @@ public class CircuitDrawer {
      */
     public void doMouse(String action, double x, double y) {
         /*# YOUR CODE HERE */
+
         if (this.operation.equals("Wire")) {
             if (action.equals("pressed")) {
                 this.drawWireChallenge(x, y);
@@ -308,6 +338,47 @@ public class CircuitDrawer {
     public void drawLabel(double x, double y) {
         /*# YOUR CODE HERE */
         UI.drawString(labelText, x, y);
+    }
+
+
+    public void showCurrentTool() {//12px gap, 30 button
+        double gap = 12;
+        double buttonHeight = 30;
+        double offset = 8;
+
+        if (this.operation.equals("Clear")) {
+            this.lastOperation = " ";
+        }
+
+
+        if (this.lastOperation.equals("Resistor")) {
+            UI.invertOval(0, buttonHeight * 2 + gap * 2 + offset, 10, 10);
+        } else if (this.lastOperation.equals("Wire")) {
+            UI.invertOval(0, buttonHeight * 1 + gap * 1 + offset, 10, 10);
+        } else if (this.lastOperation.equals("Capacitor")) {
+            UI.invertOval(0, buttonHeight * 3 + gap * 3 + offset, 10, 10);
+        } else if (this.lastOperation.equals("Source")) {
+            UI.invertOval(0, buttonHeight * 4 + gap * 4 + offset, 10, 10);
+        } else if (this.lastOperation.equals("Eraser")) {
+            UI.invertOval(0, buttonHeight * 6 + gap * 7, 10, 10);
+        }
+
+
+        if (this.operation.equals("Resistor")) {
+            UI.invertOval(0, buttonHeight * 2 + gap * 2 + offset, 10, 10);
+        } else if (this.operation.equals("Wire")) {
+            UI.invertOval(0, buttonHeight * 1 + gap * 1 + offset, 10, 10);
+        } else if (this.operation.equals("Capacitor")) {
+            UI.invertOval(0, buttonHeight * 3 + gap * 3 + offset, 10, 10);
+        } else if (this.operation.equals("Source")) {
+            UI.invertOval(0, buttonHeight * 4 + gap * 4 + offset, 10, 10);
+        } else if (this.operation.equals("Eraser")) {
+            UI.invertOval(0, buttonHeight * 6 + gap * 7, 10, 10);
+
+        }
+        this.lastOperation = operation;
+
+
     }
 
 
