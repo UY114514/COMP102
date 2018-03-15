@@ -34,6 +34,8 @@ public class CircuitDrawer {
     private double eraserSize = 40;
     private String buttonName = "Horiz";
     private String lastOperation = " ";
+    private JButton sbDuojiang;
+    private JButton Wire, Resistor, Capacitor, Source, Eraser;
 
 
     //Constructor
@@ -45,14 +47,14 @@ public class CircuitDrawer {
         UI.setMouseListener(this::doMouse);
         UI.addButton("Clear", this::doClear);
         /*# YOUR CODE HERE */
-        UI.addButton("Wire", this::doSetWire);
-        UI.addButton("Resistor", this::doSetResistor);
-        UI.addButton("Capacitor", this::doSetCapacitor);
-        UI.addButton("Source", this::doSetSource);
+        this.Wire = UI.addButton("Wire", this::doSetWire);
+        this.Resistor = UI.addButton("Resistor", this::doSetResistor);
+        this.Capacitor = UI.addButton("Capacitor", this::doSetCapacitor);
+        this.Source = UI.addButton("Source", this::doSetSource);
         UI.addTextField("Label", this::doSetLabel);
-        UI.addButton("Eraser", this::doSetEraser);
-        UI.addButton(buttonName, this::doSwitchDirection);//WIP
-//        UI.addButton("Horiz/Vert", this::doSwitchDirection);
+        this.Eraser = UI.addButton("Eraser", this::doSetEraser);
+//        UI.addButton("Hori", this::doSwitchDirection);//WIP
+        this.sbDuojiang = UI.addButton("Horiz/Vert", this::doSwitchDirection);
         UI.addButton("Quit", UI::quit);
         this.showCurrentTool();
 
@@ -134,11 +136,12 @@ public class CircuitDrawer {
         /*# YOUR CODE HERE */
         if (this.horizontalMode) {
             this.horizontalMode = false;
-            this.buttonName = "Vert";
+            this.sbDuojiang.setText("Hori");
         } else {
             this.horizontalMode = true;
-            this.buttonName = "Horiz";
+            this.sbDuojiang.setText("Vert");
         }
+//        this.showCurrentTool();
         this.doChangeButtonName();//WIP
     }
 
@@ -345,35 +348,50 @@ public class CircuitDrawer {
         double gap = 12;
         double buttonHeight = 30;
         double offset = 8;
+        boolean lastMode = horizontalMode;
 
         if (this.operation.equals("Clear")) {
             this.lastOperation = " ";
+            this.Resistor.setText("Resistor");
+            this.Wire.setText("Wire");
+            this.Capacitor.setText("Capacitor");
+            this.Source.setText("Source");
+            this.Eraser.setText("Eraser");
+            
+        }
+
+        if (lastMode) {
+            UI.drawRect(0, 0, 10, 2);
+            UI.eraseRect(0, 0, 2, 10);
+        } else {
+            UI.drawRect(0, 0, 10, 2);
+            UI.eraseRect(0, 0, 2, 10);
         }
 
 
         if (this.lastOperation.equals("Resistor")) {
-            UI.invertOval(0, buttonHeight * 2 + gap * 2 + offset, 10, 10);
+            this.Resistor.setText("Resistor");
         } else if (this.lastOperation.equals("Wire")) {
-            UI.invertOval(0, buttonHeight * 1 + gap * 1 + offset, 10, 10);
+            this.Wire.setText("Wire");
         } else if (this.lastOperation.equals("Capacitor")) {
-            UI.invertOval(0, buttonHeight * 3 + gap * 3 + offset, 10, 10);
+            this.Capacitor.setText("Capacitor");
         } else if (this.lastOperation.equals("Source")) {
-            UI.invertOval(0, buttonHeight * 4 + gap * 4 + offset, 10, 10);
+            this.Source.setText("Source");
         } else if (this.lastOperation.equals("Eraser")) {
-            UI.invertOval(0, buttonHeight * 6 + gap * 7, 10, 10);
+            this.Eraser.setText("Eraser");
         }
 
 
         if (this.operation.equals("Resistor")) {
-            UI.invertOval(0, buttonHeight * 2 + gap * 2 + offset, 10, 10);
+            this.Resistor.setText("->Resistor");
         } else if (this.operation.equals("Wire")) {
-            UI.invertOval(0, buttonHeight * 1 + gap * 1 + offset, 10, 10);
+            this.Wire.setText("->Wire");
         } else if (this.operation.equals("Capacitor")) {
-            UI.invertOval(0, buttonHeight * 3 + gap * 3 + offset, 10, 10);
+            this.Capacitor.setText("->Capacitor");
         } else if (this.operation.equals("Source")) {
-            UI.invertOval(0, buttonHeight * 4 + gap * 4 + offset, 10, 10);
+            this.Source.setText("->Source");
         } else if (this.operation.equals("Eraser")) {
-            UI.invertOval(0, buttonHeight * 6 + gap * 7, 10, 10);
+            this.Eraser.setText("->Eraser");
 
         }
         this.lastOperation = operation;
